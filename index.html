@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#17324f">
+  <meta name="description" content="Calculadora privada de gastos diarios. Funciona sin conexión y guarda tus saldos en este dispositivo.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Daily Spending">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" href="./icons/icon-192.png">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Daily Spending · Calculadora</title>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar"><div class="logo">€</div><div><div class="eyebrow">PERSONAL FINANCE</div><h1>Daily Spending</h1><p>Tu presupuesto, de un vistazo.</p></div><span class="privacy-dot" title="Datos en este dispositivo"></span></header>
+    <main>
+      <section class="hero card" aria-labelledby="hero-title"><div class="hero-label" id="hero-title">DISPONIBLE PARA GASTAR HOY</div><div class="hero-value" id="available">—</div><div class="hero-sub" id="availability-note">Según el ritmo del presupuesto mensual</div><div class="hero-meta"><span id="month-label">—</span><span id="days-label">—</span></div></section>
+      <section class="card" aria-labelledby="edit-title"><div class="section-top"><div><span class="overline">01 / ACTUALIZAR</span><h2 id="edit-title">Tus saldos</h2></div><span class="status-chip" id="save-status" role="status" aria-live="polite">Guardado en este iPhone</span></div>
+        <form id="budget-form">
+          <label class="field">Fecha de registro<input required type="date" id="entry-date" name="entry-date"></label>
+          <div class="twocol">
+            <label class="field">Edenred <span class="muted">€</span><input required type="number" min="0" step="0.01" inputmode="decimal" id="edenred" name="edenred" placeholder="0,00"></label>
+            <label class="field">Revolut <span class="muted">€</span><input required type="number" min="0" step="0.01" inputmode="decimal" id="revolut" name="revolut" placeholder="0,00"></label>
+          </div>
+          <button class="primary" type="submit" id="save-button">Guardar saldos <span aria-hidden="true">↗</span></button>
+          <p class="hint">Los resultados se actualizan mientras escribes. Pulsa «Guardar saldos» para conservar una entrada en el historial.</p>
+        </form>
+      </section>
+      <section class="card" aria-labelledby="progress-title"><div class="section-top"><div><span class="overline">02 / PROGRESO</span><h2 id="progress-title">Resumen mensual</h2></div><span class="month-tag" id="month-chip">—</span></div>
+        <div class="metric"><div class="metric-head"><span>Gasto objetivo MTD</span><strong id="target-value">—</strong></div><div class="track"><div class="fill plan" id="target-bar"></div></div></div>
+        <div class="metric"><div class="metric-head"><span>Gasto real MTD</span><strong id="actual-value">—</strong></div><div class="track"><div class="fill actual" id="actual-bar"></div></div></div>
+        <div class="divider"></div><div class="key-value"><span>Presupuesto del mes</span><strong id="budget-display">—</strong></div><div class="key-value"><span>Saldo total disponible</span><strong id="balance-display">—</strong></div><p class="hint">MTD = acumulado del mes. El importe destacado representa el margen acumulado respecto al ritmo presupuestado hasta la fecha; no es un límite de gasto diario.</p>
+      </section>
+      <section class="card" aria-labelledby="history-title"><div class="section-top"><div><span class="overline">03 / HISTORIAL</span><h2 id="history-title">Últimos registros</h2></div><span class="count-tag" id="history-count">0</span></div><div id="history-list" class="history-list"><p class="empty">Todavía no hay registros.</p></div></section>
+      <section class="card settings" aria-labelledby="settings-title"><div class="section-top"><div><span class="overline">04 / AJUSTES</span><h2 id="settings-title">Datos y respaldo</h2></div></div>
+        <label class="field">Presupuesto mensual (€)<input required type="number" id="monthly-budget" min="0.01" step="0.01" inputmode="decimal"></label><button type="button" class="secondary full" id="save-budget">Guardar presupuesto</button>
+        <div class="divider"></div><div class="twocol"><button type="button" class="secondary" id="export-json">Exportar respaldo</button><button type="button" class="secondary" id="export-csv">Exportar CSV</button></div>
+        <label class="import-label secondary" for="import-json">Importar respaldo JSON<input type="file" id="import-json" accept=".json,application/json" hidden></label>
+        <button type="button" class="danger" id="clear-history">Borrar historial</button>
+        <p class="hint">Solo se guarda información en este dispositivo mediante almacenamiento local del navegador. No se envía a ningún servidor. Para evitar pérdidas, exporta respaldos periódicamente. Eliminar la app o sus datos puede borrar el historial.</p>
+      </section>
+    </main>
+    <footer>DAILY SPENDING <span>·</span> PRIVATE BY DESIGN <span>·</span> <span id="offline-state">Disponible sin conexión tras la primera visita</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
